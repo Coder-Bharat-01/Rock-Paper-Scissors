@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Animated Rock–Paper–Scissors</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Landscape Warning -->
+  <div class="rotate-warning" id="rotateWarning">
+    <div class="phone-icon"></div>
+    <p>🔄 Please rotate your device<br>to Portrait mode for best experience</p>
+  </div>
+
+  <div class="game" id="game">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo"></div>
+        <h1>Rock • Paper • Scissors</h1>
+      </div>
+      <div class="scores">
+        <div class="chip">You: <span id="youScore">0</span></div>
+        <div class="chip">CPU: <span id="cpuScore">0</span></div>
+        <button class="btn" id="resetBtn" title="Reset scores">↻ Reset</button>
+      </div>
+    </div>
+
+    <!-- Arena -->
+    <div class="arena">
+      <div class="side">
+        <div class="label">You</div>
+        <div class="board" id="youBoard">
+          <img src="images/Rock.png" id="player-hand" class="hand left-hand shake" alt="Player Hand">
+        </div>
+      </div>
+
+      <div class="vs">
+        <div class="burst">VS</div>
+        <div id="roundResult" class="result"></div>
+      </div>
+
+      <div class="side">
+        <div class="label">Computer</div>
+        <div class="board" id="cpuBoard">
+          <img src="images/fist.png" id="cpu-hand" class="hand right-hand shake" alt="CPU Hand">
+        </div>
+      </div>
+    </div>
+    <!-- End Arena -->
+
+    <!-- Controls -->
+    <div class="controls">
+      <button class="btn" data-pick="rock" title="Choose Rock"><span class="mini">✊</span> Rock</button>
+      <button class="btn" data-pick="paper" title="Choose Paper"><span class="mini">✋</span> Paper</button>
+      <button class="btn" data-pick="scissors" title="Choose Scissors"><span class="mini">✌️</span> Scissors</button>
+      <button class="btn primary" id="autoBtn" title="Auto play demo">Auto Play</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script> 
+</body>
+</html>

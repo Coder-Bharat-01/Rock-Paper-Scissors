@@ -1,0 +1,192 @@
+:root{
+  --bg: #0e0f13;
+  --panel: #171922;
+  --accent: #7c5cff;
+  --accent-2: #28e0ae;
+  --text: #e8e9f1;
+  --muted: #9aa0b4;
+  --danger: #ff5c7c;
+  --win: #28e0ae;
+  --lose: #ff5c7c;
+  --draw: #f5c542;
+}
+
+*{ box-sizing: border-box; }
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+  background: radial-gradient(1000px 500px at 50% -150px, #acaed3 0%, var(--bg) 60%);
+  color: var(--text);
+  min-height: 100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+}
+
+.game{
+  width:min(1100px, 96vw);
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 24px;
+  box-shadow: 0 20px 80px rgba(0,0,0,.45);
+  overflow:hidden;
+}
+
+.topbar{
+  display:flex; flex-wrap:wrap; gap:10px;
+  align-items:center; justify-content:space-between;
+  padding: 14px 16px; background: rgba(0,0,0,.25);
+}
+.brand{ display:flex; gap:10px; align-items:center; flex:1; }
+.logo{ width:32px; height:32px; border-radius:10px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); filter: drop-shadow(0 4px 12px rgba(124,92,255,.45));}
+.brand h1{ font-size: clamp(16px, 2.5vw, 24px); margin:0; font-weight:700; letter-spacing:.4px; flex:1; text-align:left; }
+.scores{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+.chip{ padding:6px 10px; border-radius:999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08); font-weight:700; font-size:14px; }
+
+.arena{
+  display:grid; grid-template-columns: 1fr 140px 1fr; gap: 14px; align-items:center;
+  padding: clamp(12px, 2.5vw, 24px);
+  background: radial-gradient(100% 80% at 50% 20%, rgba(124,92,255,.12), transparent 60%);
+}
+
+.side{ display:flex; flex-direction:column; align-items:center; gap: 10px; }
+.label{ color: var(--muted); font-size:12px; letter-spacing:.5px; text-transform: uppercase; }
+
+.board{
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: var(--panel);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius: 20px;
+  display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;
+}
+
+.hand{ width: 70%; max-width: 300px; user-select:none; pointer-events:none; transform-origin: 50% 60%; }
+.emoji{ font-size: clamp(72px, 12vw, 120px); line-height:1; filter: drop-shadow(0 8px 28px rgba(0,0,0,.4)); }
+
+.vs{ text-align:center; }
+.vs .burst{
+  font-weight: 800;
+  font-size: clamp(22px, 5vw, 34px);
+  padding: 8px 0;
+  color: white;
+  text-shadow: 0 0 24px rgba(124,92,255,.8), 0 0 48px rgba(40,224,174,.55);
+}
+
+.result{
+  text-align:center; font-size: clamp(16px, 3vw, 22px); font-weight:700;
+  margin-top: -4px; min-height: 24px;
+}
+.result.win{ color: var(--win); text-shadow: 0 0 24px rgba(40,224,174,.35); }
+.result.lose{ color: var(--lose); text-shadow: 0 0 24px rgba(255,92,124,.35); }
+.result.draw{ color: var(--draw); text-shadow: 0 0 24px rgba(245,197,66,.35); }
+
+.controls{
+  display:flex; flex-wrap:wrap; gap: 10px; justify-content:center; padding: 14px;
+  border-top:1px solid rgba(255,255,255,.08); background: rgba(0,0,0,.18);
+}
+.btn{
+  padding: 10px 14px; border-radius: 999px; font-weight:700;
+  background: rgba(255,255,255,.06); color: var(--text); border: 1px solid rgba(255,255,255,.12);
+  cursor: pointer; transition: transform .15s ease, background .2s ease;
+  display:inline-flex; align-items:center; gap:6px; font-size:14px;
+}
+.btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.1); }
+.btn.primary{ background: linear-gradient(135deg, var(--accent), var(--accent-2)); border-color: transparent; }
+
+.mini{ font-size: 16px; }
+
+/* Animations */
+@keyframes shake {
+  0% { transform: translateY(0); }
+  25% { transform: translateY(-10px); }
+  50% { transform: translateY(0); }
+  75% { transform: translateY(10px); }
+  100% { transform: translateY(0); }
+}
+.shaking .hand { animation: shake 0.6s infinite; }
+
+.reveal-left{ animation: revL .35s ease forwards; }
+.reveal-right{ animation: revR .35s ease forwards; }
+@keyframes revL{ from{ transform: translateX(16%) rotate(-12deg); opacity:.6; } to{ transform: translateX(0) rotate(0); opacity:1; } }
+@keyframes revR{ from{ transform: translateX(-16%) rotate(12deg); opacity:.6; } to{ transform: translateX(0) rotate(0); opacity:1; } }
+
+.glow{
+  box-shadow: 0 0 0 0 rgba(124,92,255,.55);
+  animation: pulse 1.2s ease-in-out 0s 2;
+}
+@keyframes pulse{ 50%{ box-shadow: 0 0 0 12px rgba(124,92,255,.0);} }
+
+@media (max-width: 860px){
+  .arena{ grid-template-columns: 1fr; gap: 10px; }
+  .vs{ order:-1; }
+}
+
+@media (max-width: 500px){
+  .brand h1{ font-size:16px; }
+  .chip{ font-size:12px; padding:4px 8px; }
+  .btn{ font-size:12px; padding:8px 12px; }
+  .mini{ font-size:14px; }
+  .hand{ width: 80%; max-width: 220px; }
+}
+
+/* Rotate Warning */
+.rotate-warning{
+  display:none;
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:#0e0f13;
+  color:white;
+  z-index:9999;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
+  font-size:clamp(18px, 5vw, 26px);
+  line-height:1.4;
+}
+
+.rotate-warning p{
+  margin-top:20px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.15);
+  padding:16px 24px;
+  border-radius:16px;
+}
+
+/* Phone icon animation */
+.phone-icon{
+  width:60px; height:100px;
+  border:3px solid white;
+  border-radius:12px;
+  position:relative;
+  animation: rotatePhone 2.5s infinite ease-in-out;
+}
+.phone-icon::before{
+  content:"";
+  position:absolute;
+  bottom:-10px; left:50%;
+  transform:translateX(-50%);
+  width:18px; height:6px;
+  background:white;
+  border-radius:3px;
+}
+
+/* Animation: rotate horizontally ↔ portrait */
+@keyframes rotatePhone {
+  0%   { transform: rotate(0deg); }
+  30%  { transform: rotate(90deg); }
+  60%  { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Show warning only in landscape on small devices */
+@media screen and (max-width: 900px) and (orientation: landscape) {
+  .rotate-warning{ display:flex; }
+  .game{ display:none; }
+}
+
+
